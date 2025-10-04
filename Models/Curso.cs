@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace JEAN_HIDALGO_EXAMEN_PARCIAL.Models
 {
-    public class Curso
+    public class Curso : IValidatableObject
     {
         public int Id { get; set; }
 
@@ -14,10 +12,8 @@ namespace JEAN_HIDALGO_EXAMEN_PARCIAL.Models
         [Required]
         public string Nombre { get; set; } = string.Empty;
 
-        [Range(1, int.MaxValue)]
         public int Creditos { get; set; }
 
-        [Range(1, int.MaxValue)]
         public int CupoMaximo { get; set; }
 
         [Required]
@@ -28,8 +24,13 @@ namespace JEAN_HIDALGO_EXAMEN_PARCIAL.Models
 
         public bool Activo { get; set; } = true;
 
-        public byte[]? RowVersion { get; set; } // token de concurrencia
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Creditos < 0)
+                yield return new ValidationResult("Los créditos no pueden ser negativos.", new[] { nameof(Creditos) });
 
-        public ICollection<Matricula>? Matriculas { get; set; }
+            if (HorarioInicio >= HorarioFin)
+                yield return new ValidationResult("HorarioInicio debe ser menor que HorarioFin.", new[] { nameof(HorarioInicio), nameof(HorarioFin) });
+        }
     }
 }

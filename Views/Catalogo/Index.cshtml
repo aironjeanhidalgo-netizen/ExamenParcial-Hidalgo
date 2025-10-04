@@ -1,0 +1,44 @@
+@model JEAN_HIDALGO_EXAMEN_PARCIAL.Models.CourseFilterViewModel
+
+<h3>Catálogo de cursos</h3>
+
+<form method="get" class="row gy-2 gx-2">
+  <div class="col-auto">
+    <input asp-for="Nombre" class="form-control" placeholder="Nombre" />
+  </div>
+  <div class="col-auto">
+    <input asp-for="CreditosMin" type="number" class="form-control" placeholder="Créditos min" />
+  </div>
+  <div class="col-auto">
+    <input asp-for="CreditosMax" type="number" class="form-control" placeholder="Créditos max" />
+  </div>
+  <div class="col-auto">
+    <input asp-for="HorarioInicio" type="time" class="form-control" />
+  </div>
+  <div class="col-auto">
+    <input asp-for="HorarioFin" type="time" class="form-control" />
+  </div>
+  <div class="col-auto">
+    <button class="btn btn-primary">Filtrar</button>
+  </div>
+</form>
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<table class="table mt-3">
+  <thead><tr><th>Código</th><th>Nombre</th><th>Créditos</th><th>Horario</th><th></th></tr></thead>
+  <tbody>
+    @foreach(var c in Model.Resultados ?? new List<JEAN_HIDALGO_EXAMEN_PARCIAL.Models.Curso>())
+    {
+      <tr>
+        <td>@c.Codigo</td>
+        <td>@c.Nombre</td>
+        <td>@c.Creditos</td>
+        <td>@c.HorarioInicio:hh\\:mm - @c.HorarioFin:hh\\:mm</td>
+        <td>
+          <a asp-action="Details" asp-route-id="@c.Id" class="btn btn-sm btn-outline-primary">Ver detalle</a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
