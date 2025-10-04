@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ExamenParcial-Hidalgo")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+00241143d2f9d8f415e8ddbff45f9d7519c48976")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a2122274c846fbe4e0f55c1e0c0566f1e1815c7")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExamenParcial-Hidalgo")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExamenParcial-Hidalgo")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
