@@ -1,11 +1,26 @@
 @model JEAN_HIDALGO_EXAMEN_PARCIAL.Models.Curso
 
+<!-- Mensajes -->
+@if (TempData["Success"] != null) {
+    <div class="alert alert-success">@TempData["Success"]</div>
+}
+@if (TempData["Error"] != null) {
+    <div class="alert alert-danger">@TempData["Error"]</div>
+}
+
 <h3>@Model.Nombre (@Model.Codigo)</h3>
 <p>Créditos: @Model.Creditos | Cupo: @Model.CupoMaximo</p>
 <p>Horario: @Model.HorarioInicio:hh\\:mm - @Model.HorarioFin:hh\\:mm</p>
 
-<form asp-controller="Matriculas" asp-action="Enroll" method="post">
-    <input type="hidden" name="cursoId" value="@Model.Id" />
-    <button type="submit" class="btn btn-success">Inscribirse</button>
-    @Html.AntiForgeryToken()
-</form>
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+    <form asp-controller="Matriculas" asp-action="Enroll" method="post" class="d-inline">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="cursoId" value="@Model.Id" />
+        <button type="submit" class="btn btn-success">Inscribirse</button>
+    </form>
+}
+else
+{
+    <a asp-area="" asp-page="/Account/Login" class="btn btn-outline-primary">Iniciar sesión para inscribirse</a>
+}
