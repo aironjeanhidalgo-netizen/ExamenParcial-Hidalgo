@@ -28,6 +28,16 @@
                         </li>
                         <a class="nav-link text-dark" asp-controller="Cursos" asp-action="Index">Catálogo de Cursos</a>
 </li>
+
+
+<li class="nav-item">
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Coordinador"))
+    {
+        <a class="nav-link text-dark" asp-controller="Coordinador" asp-action="Index">Panel del Coordinador</a>
+    }
+</li>
+
+
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>

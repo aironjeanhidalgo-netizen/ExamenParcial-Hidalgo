@@ -1,0 +1,41 @@
+@model ValueTuple<JEAN_HIDALGO_EXAMEN_PARCIAL.Models.Curso, List<JEAN_HIDALGO_EXAMEN_PARCIAL.Models.Matricula>>
+@using JEAN_HIDALGO_EXAMEN_PARCIAL.Models
+
+
+@{
+    var curso = Model.Item1;
+    var matriculas = Model.Item2;
+    ViewData["Title"] = $"Matrículas - {curso.Nombre}";
+}
+
+<h2>@curso.Nombre (@curso.Codigo)</h2>
+
+<table class="table">
+    <thead><tr><th>#</th><th>Usuario</th><th>Fecha</th><th>Estado</th><th>Acción</th></tr></thead>
+    <tbody>
+    @foreach(var m in matriculas) {
+        <tr>
+            <td>@m.Id</td>
+            <td>@(ViewBag.Users.ContainsKey(m.UsuarioId) ? ViewBag.Users[m.UsuarioId] : m.UsuarioId)</td>
+            <td>@m.FechaRegistro.ToString("g")</td>
+            <td>@m.Estado</td>
+            <td>
+                @if(m.Estado != MatriculaEstado.Confirmada) {
+                    <form asp-action="Confirm" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="matriculaId" value="@m.Id" />
+                        <button class="btn btn-sm btn-success">Confirmar</button>
+                    </form>
+                }
+                @if(m.Estado != MatriculaEstado.Cancelada) {
+                    <form asp-action="Cancel" method="post" class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="matriculaId" value="@m.Id" />
+                        <button class="btn btn-sm btn-warning">Cancelar</button>
+                    </form>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

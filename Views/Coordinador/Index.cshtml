@@ -1,0 +1,27 @@
+@model IEnumerable<JEAN_HIDALGO_EXAMEN_PARCIAL.Models.Curso>
+
+<h2>Panel Coordinador — Cursos</h2>
+<a asp-action="Create" class="btn btn-primary mb-3">Crear curso</a>
+
+<table class="table">
+    <thead><tr><th>Código</th><th>Nombre</th><th>Créditos</th><th>Activo</th><th></th></tr></thead>
+    <tbody>
+    @foreach(var c in Model) {
+        <tr>
+            <td>@c.Codigo</td>
+            <td>@c.Nombre</td>
+            <td>@c.Creditos</td>
+            <td>@(c.Activo ? "Sí" : "No")</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@c.Id" class="btn btn-sm btn-outline-secondary">Editar</a>
+                <form asp-action="Disable" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@c.Id" />
+                    <button class="btn btn-sm btn-danger" onclick="return confirm('Desactivar curso?')">Desactivar</button>
+                </form>
+                <a asp-action="Details" asp-route-id="@c.Id" class="btn btn-sm btn-info">Matrículas</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
